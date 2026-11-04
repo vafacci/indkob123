@@ -15,10 +15,12 @@ async function requireUser() {
 // ---------- Login ----------
 export async function login(_prev: string | null, formData: FormData): Promise<string | null> {
   const name = String(formData.get("name") ?? "").trim().slice(0, 30);
-  const password = String(formData.get("password") ?? "");
+  // Telefoner sætter ofte mellemrum efter ordet og stort begyndelsesbogstav – det ignorerer vi
+  const password = String(formData.get("password") ?? "").trim().toLowerCase();
+  const expected = (process.env.APP_PASSWORD ?? "").trim().toLowerCase();
 
   if (!name) return "Skriv dit navn.";
-  if (!process.env.APP_PASSWORD || password !== process.env.APP_PASSWORD) {
+  if (!expected || password !== expected) {
     return "Forkert adgangskode.";
   }
 

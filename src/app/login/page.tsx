@@ -26,6 +26,9 @@ export default function LoginPage() {
           required
           placeholder="Adgangskode"
           autoComplete="current-password"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
           className={input}
         />
         <button
